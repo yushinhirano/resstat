@@ -1,0 +1,53 @@
+########################################
+#
+# function getFieldsForMultiLines
+#
+#   [概要]
+#      getLineFieldsの複数行バージョン。
+#      引数として与えられた複数の行について、指定のフィールドのみを切り出して改行区切りで出力する。
+#      ただし、全ての行が同じフィールド数を持っている必要があります。
+#      空行は無視されます。
+#      第一引数は取得元（複数行）、第二引数がフィールド数です。
+#
+#   [戻り値]
+#      正常取得：0
+#      指定されたフィールド無：1
+#      引数不正：99
+#
+########################################
+function getFieldsForMultiLines(){
+    local TARGET
+    local FIELD
+    local VALUE
+    local LINE_BUFF
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getFieldsForMultiLines(): 1st Param is required"
+        return 99
+    fi
+    TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getFieldsForMultiLines(): 2nd Param is required"
+        return 99
+    fi
+    FIELD="$2"
+    
+    # 入力値を改行区切りでループ
+    for LINE_BUFF in ${(@f)TARGET}
+    do
+        # １行を単語分割して配列化
+        : ${(A)VALUE::=${=LINE_BUFF}}
+        
+        # フィールド数が取得可能ならechoする。配列indexを超えるなら取得不能。
+        if [[ ${#VALUE[*]} -ge ${FIELD} ]];then
+            echo -e "${VALUE[${FIELD}]}"
+        else
+            echo -e "Error:getFieldsForMultiLines(): Data[${TARGET}] No Fileds [${FIELD}]"
+            return 1
+        fi
+    done
+
+    return 0
+}
+

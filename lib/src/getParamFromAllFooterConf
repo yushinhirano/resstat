@@ -1,0 +1,43 @@
+########################################
+#
+# function getParamFromAllFooterConf
+#
+#   [概要]
+#      conf/${SYSKBN}/all_footer.confから指定のパラメータを取得する。
+#      先頭#の行を無視し、PARAM=VALUE形式でPARAMからVALUEを取得して標準出力する。
+#      同一のパラメータが複数存在する場合はエラー。
+#
+#   [Usage]
+#      getParamFromAllFooterConf param_name
+#
+#   [引数]
+#      param_name : 取得パラメータ名
+#
+#   [戻り値]
+#      パラメータ有：0
+#      パラメータ無：1
+#      パラメータ複数存在：2
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function getParamFromAllFooterConf(){
+    #ローカル変数定義はシェルにより様々。ここでは一応localを使う。たいていのシェルにあるはず。
+    local PARAM_NAME
+    local VALUE
+    if [[ ! -r "${ALL_FOOTER_CONFFILE}" ]];then
+        echo -e "Error:getParamFromAllFooterConf(): File[${ALL_FOOTER_CONFFILE}] not exists"
+        return 11
+    fi
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getParamFromAllFooterConf(): 1st Args is required"
+        return 99
+    fi
+    PARAM_NAME="$1"
+    
+    getParam "${ALL_FOOTER_CONFFILE}" "${PARAM_NAME}"
+    
+    return $?
+}
+

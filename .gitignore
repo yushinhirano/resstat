@@ -1,0 +1,17 @@
+archive/*
+data/*
+output/*
+proc_id/*
+work/*
+
+!.gitkeep
+!distribute.sh
+
+local_memo/*
+lib/*.zwc
+work/gitignore_forhub
+work/gitignore_formy
+bin/common_test.sh
+bin/deployer.sh
+bin/make_stats_contents_html.sh
+

@@ -1,0 +1,60 @@
+########################################
+#
+# function getGraphConfDataBy1stKey
+#
+#   [概要]
+#      グラフコンフィグファイルから第一フィールドをKeyに発見された最初の行を返す。
+#      フィールド基準はawk標準。
+#      第一引数に対象ファイル、第二引数に検索Key文字列を取る。
+#
+#   [戻り値]
+#      取得行有：0
+#      取得行無：1
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function getGraphConfDataBy1stKey(){
+    local GRAPH_CONF
+    local HEADER_LINES
+    local KEY_STRING
+    local LINE_BUFF
+    local CONF_CONTS
+
+    if [[ -z "$1" ]];then
+        echo -e "Error:getGraphConfDataBy1stKey(): 1st Param is required"
+        return 99
+    fi
+    GRAPH_CONF="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getGraphConfDataBy1stKey(): 2nd Param is required"
+        return 99
+    fi
+    KEY_STRING="$2"
+
+    if [[ ! -r "${GRAPH_CONF}" ]];then
+        echo -e "Error:getGraphConfDataBy1stKey(): File[${GRAPH_CONF}] not exists"
+        return 11
+    fi
+    
+    # グラフコンフィグから、先頭#と空行を除いて取得する。
+    : ${(A)CONF_CONTS::=${${(@f)"$(<${GRAPH_CONF})"}:#[#]*}}
+    
+    for LINE_BUFF in ${CONF_CONTS[*]}
+    do
+        # 行バッファをシェル単語分割で区切り、１カラム目が検索Key文字列にヒットするかを判定する。
+        if [[ ${${=LINE_BUFF}[1]} == "${KEY_STRING}" ]];then
+            HEADER_LINES=${LINE_BUFF}
+        fi
+    done
+    
+    if [[ -z "${HEADER_LINES}" ]];then
+        return 1
+    fi
+    
+    echo -E "${HEADER_LINES}"
+    return 0;
+
+}
+

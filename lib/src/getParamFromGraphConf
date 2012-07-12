@@ -1,0 +1,38 @@
+########################################
+#
+# function getParamFromGraphConf
+#
+#   [概要]
+#      graph.confから指定のパラメータを取得する。
+#      PARAM=VALUE形式でPARAMからVALUEを取得して標準出力する。
+#      同一のパラメータが複数存在する場合はエラー。
+#
+#   [Usage]
+#      getParamFromGraphConf param_name
+#
+#   [引数]
+#      param_name : パラメータ名
+#
+#   [戻り値]
+#      パラメータ有：0
+#      パラメータ無：1
+#      パラメータ複数存在：2
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function getParamFromGraphConf(){
+    #ローカル変数定義はシェルにより様々。ここでは一応localを使う。たいていのシェルにあるはず。
+    local PARAM_NAME
+
+    if [[ -z "$1" ]];then
+        echo -e "Error:getParamFromGraphConf(): 1st Param is required"
+        return 99
+    fi
+    PARAM_NAME="$1"
+    
+    getParam "${GRAPH_CONFFILE}" "${PARAM_NAME}"
+    
+    return $?
+}
+

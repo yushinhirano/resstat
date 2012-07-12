@@ -1,0 +1,34 @@
+########################################
+#
+# function getGraphConfMultiHeader
+#
+#   [概要]
+#      グラフコンフィグファイルからMultiPlot用ヘッダ行を取得する。
+#      尚、MultiPlot用ヘッダ行は対象ファイルのawkでの第一フィールドがmulti0の行である。
+#      引数に対象のファイルを取る。
+#
+#   [戻り値]
+#      multiplotヘッダ行有：0
+#      multiplotヘッダ行無：1
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+#   [TODO]
+#      zshの場合はファイル入力置換と変換で高速化可能。
+#
+########################################
+function getGraphConfMultiHeader(){
+    local GRAPH_CONF
+    local HEADER_LINES
+
+    HEADER_LINES=$(getGraphConfDataBy1stKey "$1" "multi0")
+    
+    if [[ -z "${HEADER_LINES}" ]];then
+        return 1
+    fi
+    
+    echo -E "${HEADER_LINES}"
+    return 0;
+
+}
+

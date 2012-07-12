@@ -1,0 +1,12 @@
+# 停止しないサービス一覧
+autofs
+network
+rpcbind
+rpcgssd
+rpcidmapd
+sshd
+rsyslog
+uuidd
+irqbalance
+ypbind
+netfs

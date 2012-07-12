@@ -1,0 +1,45 @@
+########################################
+#
+# function getLineFieldsRear
+#
+#   [概要]
+#      引数として与えられた行について、指定のフィールド番号以降のフィールドを全て取得し、各フィールドをスペース区切りでechoする。
+#      フィールド区切り基準はシェルの単語分割。
+#      第一引数は取得元（1行）、第二引数が指定フィールド数です。
+#
+#   [戻り値]
+#      正常取得：0
+#      指定されたフィールド番号以降が存在しない：1
+#      引数不正：99
+#
+########################################
+function getLineFieldsRear(){
+    local TARGET
+    local FIELD
+    local VALUE
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getLineFieldsRear(): 1st Param is required"
+        return 99
+    fi
+    TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getLineFieldsRear(): 2nd Param is required"
+        return 99
+    fi
+    FIELD="$2"
+    
+    # 単語分割して配列化
+    : ${(A)VALUE::=${=TARGET}}
+    # フィールド数が取得可能ならechoする。配列indexを超えるなら取得不能。
+    if [[ ${#VALUE[*]} -ge ${FIELD} ]];then
+        echo -e "${VALUE[${FIELD},-1]}"
+    else
+        echo -e "Error:getLineFieldsRear(): Data[${TARGET}] No Fileds [${FIELD}]"
+        return 1
+    fi
+    
+    return 0
+}
+

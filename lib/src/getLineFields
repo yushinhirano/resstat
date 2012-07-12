@@ -1,0 +1,45 @@
+########################################
+#
+# function getLineFields
+#
+#   [概要]
+#      引数として与えられた行について、指定のフィールドを取得する。
+#      フィールド区切りはシェルの単語分割機能。
+#      第一引数は取得元（1行）、第二引数がフィールド数です。
+#
+#   [戻り値]
+#      正常取得：0
+#      指定されたフィールド無：1
+#      引数不正：99
+#
+########################################
+function getLineFields(){
+    local TARGET
+    local FIELD
+    local VALUE
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getLineFields(): 1st Param is required"
+        return 99
+    fi
+    TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getLineFields(): 2nd Param is required"
+        return 99
+    fi
+    FIELD="$2"
+    
+    # 単語分割して配列化
+    : ${(A)VALUE::=${=TARGET}}
+    # フィールド数が取得可能ならechoする。配列indexを超えるなら取得不能。
+    if [[ ${#VALUE[*]} -ge ${FIELD} ]];then
+        echo -e "${VALUE[${FIELD}]}"
+    else
+        echo -e "Error:getLineFields(): Data[${TARGET}] No Fileds [${FIELD}]"
+        return 1
+    fi
+    
+    return 0
+}
+

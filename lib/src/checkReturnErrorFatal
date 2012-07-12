@@ -1,0 +1,39 @@
+########################################
+#
+# function checkReturnErrorFatal
+#
+#   [概要]
+#      コマンド戻り値を引数にして、0でなければ即exitする。
+#      その際、 第二引数があれば、そのメッセージを、
+#      第二引数未指定ならば[resstat execute fatal error.]を標準エラー出力する。
+#
+#   [Usage]
+#      checkReturnErrorFatal retval [message]
+#
+#   [引数]
+#      retval  : チェックする戻り値
+#      message : 必須ではない。標準エラー出力するエラーメッセージ。
+#
+#   [戻り値]
+#      正常終了         : 0
+#      引数不正         : 1
+#      retvalがエラー値 : retvalの値でスクリプトプロセスからexit
+#
+########################################
+function checkReturnErrorFatal(){
+    
+    # 引数が無効値含め何であっても良いように、文字列比較。
+    if [[ "$1" != "0" ]];then
+        # 第二引数があれば出力。
+        if [[ -n "$2" ]];then
+            echo -e "$2" >&2
+        else
+            echo -e "resstat execute fatal error." >&2
+        fi
+        # exitの引数は数値以外でもexitできる。
+        exit "$1"
+    fi
+    
+    return $1
+}
+

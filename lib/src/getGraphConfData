@@ -1,0 +1,59 @@
+########################################
+#
+# function getGraphConfData
+#
+#   [概要]
+#      グラフコンフィグファイルからヘッダ行以外のデータ行を取得する。
+#      対象はシェルの単語分割での第一フィールドが0でなく、かつ先頭がmultiでない行である。
+#      引数に対象のファイルを取る。
+#
+#   [戻り値]
+#      データ行有：0
+#      データ行無：1
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+#   [TODO]
+#      zshの場合はファイル入力置換と変換で高速化可能。
+#
+########################################
+function getGraphConfData(){
+    local GRAPH_CONF
+    local DATA_LINES
+    local CONF_CONTS
+    local LINE_BUFF
+
+    if [[ -z "$1" ]];then
+        echo -e "Error:getGraphConfData(): 1st Param is required"
+        return 99
+    fi
+    GRAPH_CONF="$1"
+
+    if [[ ! -r "${GRAPH_CONF}" ]];then
+        echo -e "Error:getGraphConfData(): File[${GRAPH_CONF}] not exists"
+        return 11
+    fi
+    
+    # グラフコンフィグから、先頭#と空行を除いて取得する。
+    : ${(A)CONF_CONTS::=${${(@f)"$(<${GRAPH_CONF})"}:#[#]*}}
+    
+    for LINE_BUFF in ${CONF_CONTS[*]}
+    do
+        # 行バッファをシェル単語分割で区切り、１カラム目が0以外かつmultiで始まらない行を取得する。
+        if [[ ${${=LINE_BUFF}[1]} != "0" &&
+              ${${=LINE_BUFF}[1]} != "multi"* ]];then
+            DATA_LINES=(${DATA_LINES[*]} ${LINE_BUFF})
+        fi
+    done
+
+    if [[ -z "${DATA_LINES}" ]];then
+        echo -e "Error:getGraphConfData(): File[${GRAPH_CONF}] Data none"
+        return 1
+    fi
+    
+    # 取得した配列行を改行区切りで出力
+    echo -e "${(j:\n:)DATA_LINES}"
+    return 0;
+
+}
+

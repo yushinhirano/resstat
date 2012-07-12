@@ -1,0 +1,42 @@
+########################################
+#
+# function getParamFromConf
+#
+#   [概要]
+#      resstat.confから指定のパラメータを取得する。
+#      PARAM=VALUE形式でPARAMからVALUEを取得して標準出力する。
+#      同一のパラメータが複数存在する場合はエラー。
+#
+#   [Usage]
+#      getParamFromConf param_name
+#
+#   [引数]
+#      param_name : パラメータ名
+#
+#   [戻り値]
+#      パラメータ有：0
+#      パラメータ無：1
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function getParamFromConf(){
+    #ローカル変数定義はシェルにより様々。ここでは一応localを使う。たいていのシェルにあるはず。
+    local PARAM_NAME
+    local VALUE
+    if [[ ! -r "${CONF_FILE}" ]];then
+        echo -e "Error:getParamFromConf(): File[${CONF_FILE}] not exists"
+        return 11
+    fi
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getParamFromConf(): 1st Param is required"
+        return 99
+    fi
+    PARAM_NAME="$1"
+    
+    getParam "${CONF_FILE}" "${PARAM_NAME}"
+    
+    return $?
+}
+

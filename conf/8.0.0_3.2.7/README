@@ -1,0 +1,45 @@
+########################################
+#
+# グラフコンフィグ共通セット
+#    sysstat      : 8.0.0～8.0.1
+#    procs        : 3.2.7
+#
+########################################
+
+このディレクトリのコンフィグ一式は、
+sysstatバージョン8.0.0～8.0.1、procsバージョン3.2.7用のグラフ化コンフィグファイルです。
+
+########################################
+# 前バージョンとの変更点 ( from sysstat 7.0.2)
+########################################
+  7.1.2 -- sar -n DEVの送受信バイト表示がキロバイト表示に変更
+           ・sar_n_DEV.confの修正。rxbyt/sの項目をrxkB/sに変更
+           ・sar_n_DEV.confの修正。txbyt/sの項目をtxkB/sに変更
+  7.1.4 -- pidstat追加。ただし、この時点では-hオプションによる統合が不可能。
+  7.1.5 -- pidstat に-d追加。ディスクIOが取得可能。
+           ・pidstat-u.conf、pidstat-r.conf、pidstat-d.confの作成。
+           ・command.confの修正。pidstat-u、pidstat-r、pidstat-d。
+  7.1.6 -- sar -Bの拡張。pgfree/s、pgscank/s、pgscand/s、pgsteal/s、%vmeff
+           ・sar__B.confの修正
+           sar -x、sar -Xの削除。
+           ・sar_x.conf、sar__X.confの削除。
+           ・command.confの修正。
+  8.0.0 -- sar -v の変更。file-sz、inode-sz、pty-nrのみとなり、他の全てを削除。
+           ・sar_v.confの修正。
+           sar -n SOCKの修正。tcp-tw追加。
+           ・sar_n_SOCK.confの修正。
+
+########################################
+# パッケージ構成
+########################################
+
+sysstat 8.0.0
+  |----------  sar
+  |----------  mpstat
+  |----------  iostat
+  |----------  pidstat
+
+
+procps 3.2.7
+  |---------  vmstat
+

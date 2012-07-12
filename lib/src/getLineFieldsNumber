@@ -1,0 +1,26 @@
+########################################
+#
+# function getLineFieldsNumber
+#
+#   [概要]
+#      引数として与えられた行のフィールド数(シェル単語分割換算)を取得する。
+#      引数は1行にしてください。
+#
+#   [戻り値]
+#      正常取得：0
+#      引数不正：99
+#
+########################################
+function getLineFieldsNumber(){
+    local TARGET
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getLineFieldsNumber(): 1st Param is required"
+        return 99
+    fi
+    TARGET="$1"
+    
+    echo -e ${#${=TARGET}[*]}
+    return 0
+}
+

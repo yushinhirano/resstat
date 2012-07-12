@@ -1,0 +1,109 @@
+########################################
+#
+# function compVersion
+#
+#   [概要]
+#      指定された二つの文字列を「バージョン番号」とみなして、
+#      その比較演算結果をreturnする。標準出力はしない。
+#      COMP_OPERATION_FLGの値によって示される条件に、
+#      value1とvalue2の値がマッチしていれば0、それ以外は1以上の値を返す。
+#
+#   [Usage]
+#      compVersion COMP_OPERATION_FLG value1 value2
+#
+#   [引数]
+#      COMP_OPERATION_FLG : 0 : value1 == value2
+#                           1 : value1 >  value2
+#                           2 : value1 <  value2
+#      value1 : 比較値１
+#      value2 : 比較値２
+#
+#   [戻り値]
+#      比較基準にマッチ：0
+#      比較基準にマッチしない：1
+#      引数不正：99
+#
+########################################
+function compVersion(){
+    
+    local FIRSTVAL
+    local SECONDVAL
+    local CNT
+    local ANS
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:compVersion(): 1st Param is required"
+        return 99
+    fi
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:compVersion(): 2nd Param is required"
+        return 99
+    fi
+    
+    if [[ -z "$3" ]];then
+        echo -e "Error:compVersion(): 3rd Param is required"
+        return 99
+    fi
+    
+    # バージョン区切り文字(半角ピリオド)を半角SPに変換し、配列として取り込む。
+    # ここで単なる文字列化して比較すると、マイナーバージョンが二桁以上の場合に対応できない（1.19.1と1.2.0で後者が大きい様な事態になる）
+    : ${(A)FIRSTVAL::=${=${2//./ }}}
+    : ${(A)SECONDVAL::=${=${3//./ }}}
+    
+    # どちらかのバージョン数限界に辿りつくまでループする。
+    CNT=1
+    ANS=0
+    while [[ $CNT -le ${#FIRSTVAL[*]} && $CNT -le ${#SECONDVAL[*]} ]]
+    do
+        if [[ ${FIRSTVAL[$CNT]} -eq ${SECONDVAL[$CNT]} ]];then
+            CNT=$(( CNT + 1 ))
+            continue
+        elif [[ ${FIRSTVAL[$CNT]} -gt ${SECONDVAL[$CNT]} ]];then
+            ANS=1
+            break
+        else 
+            ANS=2
+            break
+        fi
+        CNT=$(( CNT + 1 ))
+    done
+
+    # どちらかのバージョン数限界に辿りついても差が無かった場合、配列数の差で決定。つまり、マイナーバージョンが一つでも付いている方を優先。
+    # ただし、例えば9.0.0と9.0は前者が大きくなってしまう（そんな付け方まずしないとは思うけどね）
+    if [[ $ANS -eq 0 ]];then
+        if [[ ${#FIRSTVAL[*]} -gt ${#SECONDVAL[*]} ]];then
+            ANS=1
+        elif [[ ${#FIRSTVAL[*]} -lt ${#SECONDVAL[*]} ]];then
+            ANS=2
+        fi
+    fi
+    
+    # 比較結果値に対し、第一引数で指定されている比較演算子と照らして適切な値をリターンする。
+    case $ANS in
+    0)
+        if [[ $1 -eq ${COMPVERSION_EQUAL} ]];then
+            return 0
+        fi
+        ;;
+    1)
+        if [[ $1 -eq ${COMPVERSION_LARGE} ]];then
+            return 0
+        fi
+        ;;
+    2)
+        if [[ $1 -eq ${COMPVERSION_SMALL} ]];then
+            return 0
+        fi
+        ;;
+    *)
+        echo -e "Error:compVersion(): 1st Param support val [ 0 | 1 | 2 ]"
+        return 99
+        ;;
+    esac
+    
+    
+    return 1
+
+}
+

@@ -1,0 +1,38 @@
+########################################
+#
+# function getProcsVersion
+#
+#   [概要]
+#      マシンにインストールされているprocsのバージョンを標準出力する。
+#      取得はvmstat -Vを用いて行うため、
+#      インストールされていてもPATH上に通っていなければならない。
+#      尚、パッケージ管理コマンドでのバージョンチェックは、ディストロによってコマンドが異なり煩わしいので行わない。
+#
+#   [戻り値]
+#      正常取得：0
+#      インストールされていない、またはvmstatが見つからない：1
+#      その他例外エラー：99
+#
+########################################
+function getProcsVersion(){
+    local PROCS_VERSION
+    local RETVAL
+    
+    which vmstat &> /dev/null
+    RETVAL=$?
+    if [[ ${RETVAL} -ne 0 ]];then
+        echo -e "Error:getProcsVersion(): vmstat command not found"
+        return 1
+    fi
+    
+    PROCS_VERSION="${${="$(vmstat -V)"}[3]}"
+    RETVAL=$?
+    if [[ ${RETVAL} -ne 0 ]];then
+        echo -e "Error:getProcsVersion(): version get unknown error"
+        return 99
+    fi
+    
+    echo -E "${PROCS_VERSION}"
+    return 0
+}
+

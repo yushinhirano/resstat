@@ -1,0 +1,13 @@
+############################################################
+# resstat version description
+############################################################
+
+VERSION     = 0.3.0-rc
+
+AUTHOR      = yushin.hirano
+
+REPORT_TO   = yushin2494@gmail.com
+
+LAST_UPDATE = 2012/03/29
+
+

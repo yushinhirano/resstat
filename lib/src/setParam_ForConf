@@ -1,0 +1,42 @@
+########################################
+#
+# function setParam_ForConf
+#
+#   [概要]
+#      resstat.confの指定パラメータを指定値にセットして修正する。
+#
+#   [Usage]
+#      setParam_ForConf param_name set_value
+#
+#   [引数]
+#      param_name : パラメータ名
+#
+#   [戻り値]
+#      パラメータ有：0
+#      パラメータ無：1
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function setParam_ForConf(){
+    
+    if [[ ! -r "${CONF_FILE}" ]];then
+        echo -e "Error:setParam_ForConf(): File[${CONF_FILE}] not exists"
+        return 11
+    fi
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:setParam_ForConf(): 1st Param is required"
+        return 99
+    fi
+
+    if [[ -z "$2" ]];then
+        echo -e "Error:setParam_ForConf(): 2nd Param is required"
+        return 99
+    fi
+    
+    setParam "${CONF_FILE}" "$1" "$2"
+    
+    return $?
+}
+

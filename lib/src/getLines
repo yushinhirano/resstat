@@ -1,0 +1,56 @@
+########################################
+#
+# function getLines
+#
+#   [概要]
+#      引数として与えられた複数行の入力について、指定の行を取得する。
+#      第一引数は取得元、第二引数が行数です。
+#
+#      引数に入力データをもらうため、ここが大きすぎるとシェルの限界に達しそうで危険。
+#      大きい場合には中間データに書き、getLinesFromFileを使用すること。
+#
+#   [戻り値]
+#      正常取得：0
+#      指定行無：1
+#      引数不正：99
+#
+########################################
+function getLines(){
+    local TARGET
+    local LINECNT
+    local VALUE
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getLines(): 1st Param is required"
+        return 99
+    fi
+    TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getLines(): 2nd Param is required"
+        return 99
+    fi
+    LINECNT="$2"
+    
+    VALUE=$(echo -e "${TARGET}" |  awk '(NR == '${LINECNT}'){print $0;exit 0;}')
+    
+    if [[ -z "${VALUE}" ]];then
+        echo -e "Error:getLines(): Data[${TARGET}] No Lines [${LINECNT}]"
+        return 1
+    fi
+    
+    echo -e "${VALUE}"
+    return 0
+
+
+# 以下の用にシェルビルトイン機能だけで出来るかとも思ったが、(@f)は空行を配列要素に認識してくれないので無理。
+    # target内容を改行区切りで配列取り込み。ただし、空行は要素に入らないので注意。
+#    VALUE=${(@f)TARGET}
+    # 配列要素数を超える行を要求された場合はエラー。
+#    if [[ ${#VALUE[*]} -lt ${LINECNT} ]];then
+#        echo -e "Error:getLines(): Data[${TARGET}] No Lines [${LINECNT}]"
+#        return 1
+#    fi
+
+
+}

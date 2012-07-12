@@ -1,0 +1,86 @@
+########################################
+#
+# function loadAllParam
+#
+#   [概要]
+#      指定されたコンフィグファイルから、全てのパラメータをプロセスのメモリに取り込む。
+#      取り込み方法は、第二引数が1ならグローバル変数へ、第二引数が2なら環境変数にexportする。
+#
+#   [Usage]
+#      loadAllParam conf_name set_type
+#
+#   [引数]
+#      conf_name  : コンフィグファイル
+#      set_type   : 1 :: グローバル変数セット
+#                   2 :: 環境変数にexport
+#
+#   [戻り値]
+#      パラメータ有：0
+#      パラメータ無：1
+#      パラメータ複数存在：2
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function loadAllParam(){
+    #ローカル変数定義はシェルにより様々。ここでは一応localを使う。たいていのシェルにあるはず。
+    local SET_TYPE
+    local CONF_TARGET
+    local LINE_BUFF
+    local LEFTVAL
+    local RIGHTVAL
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:loadAllParam(): 1st Param is required"
+        return 99
+    fi
+    CONF_TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:loadAllParam(): 2nd Param is required"
+        return 99
+    fi
+    SET_TYPE="$2"
+    
+    if [[ ! -r "${CONF_TARGET}" ]];then
+        echo -e "Error:loadAllParam(): File[${CONF_TARGET}] not exists"
+        return 11
+    fi
+    
+    if [[ "${SET_TYPE}" != "1" && "${SET_TYPE}" != "2" ]];then
+        echo -e "Error:loadAllParam(): 2nd Param  support value [1] or [2]."
+        return 12
+    fi
+    
+    # 先頭#及び空行を除き、[*=*]にマッチする（=を含む行）を取得してループ
+    for LINE_BUFF in ${(M)${${(@f)"$(<${CONF_TARGET})"}:#[#]*}:#*[=]*}
+    do
+        # 行を右から最長一致の[=]で区切って単語分割し、左辺を取得。（上記の条件により、[=]は必ず存在。）
+        : ${(A)LEFTVAL::=${=${LINE_BUFF%%[=]*}}}
+        
+        # 単語分割してカラム２以上は無視。
+        if [[ ${#LEFTVAL[*]} -ne 1 ]];then
+            continue
+        fi
+        
+        # 行を左から最短一致の[=]で区切り、単語分割して右辺値を取得。
+        : ${(A)RIGHTVAL::=${=${LINE_BUFF#*[=]}}}
+        
+        # 単語分割してカラム２以上は無視。
+        if [[ ${#RIGHTVAL[*]} -ne 1 ]];then
+            continue
+        fi
+        
+        if [[ "${SET_TYPE}" == 1 ]];then
+            # グローバル変数セット
+            typeset -g ${LEFTVAL[1]}=${RIGHTVAL[1]}
+        elif [[ "${SET_TYPE}" == 2 ]];then
+            # 環境変数export
+            export ${LEFTVAL[1]}=${RIGHTVAL[1]}
+        fi
+        
+    done
+    
+    return 0
+}
+

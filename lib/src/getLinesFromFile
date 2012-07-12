@@ -1,0 +1,48 @@
+########################################
+#
+# function getLinesFromFile
+#
+#   [概要]
+#      引数として与えられた入力ファイルについて、指定の行を取得する。
+#      第一引数は取得元ファイル、第二引数が行数です。
+#
+#      ここでは、入力ファイルが充分大きいことを想定し、シェル内の変数容量限界を超えない様に配慮しています。
+#      具体的には、外部コマンド依存で行っています。
+#
+#
+#   [戻り値]
+#      正常取得：0
+#      指定行無：1
+#      引数不正：99
+#
+########################################
+function getLinesFromFile(){
+    local TARGET
+    local LINECNT
+    local VALUE
+    
+    if [[ ! -s "$1" ]];then
+        echo -e "Error:getLinesFromFile(): 1st Param is [readable file] required"
+        return 99
+    fi
+    TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getLinesFromFile(): 2nd Param is required"
+        return 99
+    fi
+    LINECNT="$2"
+    
+    # sedでも可能だった。sed -n "${LINECNT}p"。
+    VALUE=$(awk '(NR == '${LINECNT}'){print $0;exit 0;}' "${TARGET}")
+    
+    if [[ -z "${VALUE}" ]];then
+        echo -e "Error:getLinesFromFile(): DataFile[${TARGET}] No Lines Num [${LINECNT}]"
+        return 1
+    fi
+    
+    echo -e "${VALUE}"
+    return 0
+
+}
+

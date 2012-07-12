@@ -1,0 +1,41 @@
+########################################
+#
+# function getSysstatVersion
+#
+#   [概要]
+#      マシンにインストールされているsysstatのバージョンを標準出力する。
+#      取得はsar -Vを用いて行うため、
+#      インストールされていてもPATH上に通っていなければならない。
+#      尚、パッケージ管理コマンドでのバージョンチェックは、ディストロによってコマンドが異なり煩わしいので行わない。
+#
+#   [戻り値]
+#      正常取得：0
+#      インストールされていない、またはsarが見つからない：1
+#      その他例外エラー：99
+#
+########################################
+function getSysstatVersion(){
+    local SYSSTAT_VERSION
+    local RETVAL
+    
+    which sar &> /dev/null
+    RETVAL=$?
+    if [[ ${RETVAL} -ne 0 ]];then
+        echo -e "Error:getSysstatVersion(): sar command not found"
+        return 1
+    fi
+    
+    # なぜかsarのバージョンは標準エラー出力に出る。何者。
+    # このソースもかなりややこしいが、sar -V の出力を行区切りで配列化して1行目だけ抜き、その後単語分割して第三カラムのみ取得した。
+    # 二つの配列インデックス指定が、別の意味を持つので注意。
+    : ${SYSSTAT_VERSION::=${${=${${(@f)"$(sar -V 2>&1)"}[1]}}[3]}}
+    RETVAL=$?
+    if [[ ${RETVAL} -ne 0 ]];then
+        echo -e "Error:getSysstatVersion(): version get unknown error"
+        return 99
+    fi
+    
+    echo -E "${SYSSTAT_VERSION}"
+    return 0
+}
+

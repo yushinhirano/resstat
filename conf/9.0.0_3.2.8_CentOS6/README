@@ -1,0 +1,62 @@
+########################################
+#
+# グラフコンフィグ共通セット
+#    sysstat      : 9.0.0～9.0.6
+#    procs        : 3.2.8
+#
+########################################
+
+このディレクトリのコンフィグ一式は、
+sysstatバージョン9.0.0～9.0.6、procsバージョン3.2.8用のグラフ化コンフィグファイルです。
+CentOS6.0系辺りは、デフォルトではこのコンフィグを使用することになります。
+
+########################################
+# 前バージョンとの変更点 ( from sysstat 8.0.2)
+########################################
+  8.1.3 -- sar -cの削除。同項目をsar -wへ追加。
+           ・sar_c.confを削除。
+           ・sar_w.confを修正。
+        -- sarから割り込みとプロセッサの情報が取得不能となった。
+           ・mpstatからintr/sを削除。
+
+  8.1.5 -- sar -u ALLに、%guestを追加。
+           ・sar_uを修正。また、同項目はpidstatにも追加されているので、pidstat.confを修正。
+        -- sar -S が追加され、仮想マシンタスク時間を表示。逆に-rからこれらの項目を抜いてメモリ表示のみに。
+        -- sar -S に%swpcadを追加。
+        -- sar -r に kbcommit と %commitを追加。
+           ・sar_S.confを追加。
+           ・sar_rの修正。
+
+  8.1.6 -- pidstat -h追加。
+           ・pidstat_*.confを、pidstat.confに統合。
+
+  8.1.7 -- sar -n にIP、ICMP、TCP、UDPを追加。
+        -- sadcに-S SNMPを追加。
+           ・sar_n_IP.conf、sar_n_EIP.conf、sar_n_ICMP.conf、sar_n_EICMP.conf、sar_n_TCP.conf、sar_n_UDP.confを追加。
+
+  8.1.8 -- sar -n にIPv6, ICMPv6, UDPv6を追加。
+        -- sadc に-S IPV6を追加。
+           ・sar_n_IP6.conf、sar_n_EIP6.conf、sar_n_ICMP6.conf、sar_n_EICMP6.conf、sar_n_SOCK6.conf、sar_n_UDP6.confを追加。
+
+  9.0.0 -- sar -m オプション追加。電源管理とCPU周波数ステータス。
+        -- sadc -S POWERが追加。
+           ・sar_m.confを追加。
+
+  ?.?.? -- sar -uやpidstatのユーザ空間CPU使用率「%user」が、「%usr」と修正されている。
+           ・mpstat.conf、sar_u.conf、pidstat.confを修正。
+
+
+########################################
+# パッケージ構成
+########################################
+
+sysstat 9.0.0
+  |----------  sar
+  |----------  mpstat
+  |----------  iostat
+  |----------  pidstat
+
+
+procps 3.2.8
+  |---------  vmstat
+

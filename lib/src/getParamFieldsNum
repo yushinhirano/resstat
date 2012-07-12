@@ -1,0 +1,57 @@
+########################################
+#
+# function getParamFieldsNum
+#
+#   [概要]
+#      引数として与えられた１行の入力について、指定された文字列にヒットするフィールド番号を取得する。
+#      フィールド区切り基準はシェルの単語分割。
+#      第一引数は取得元（1行）、第二引数が検索対象文字列です。
+#
+#   [戻り値]
+#      正常取得：0
+#      ヒット無：1
+#      引数不正：99
+#
+########################################
+function getParamFieldsNum(){
+    local TARGET
+    local FIELDNAME
+    local VALUE
+    local CNT
+    local LINE_BUFF
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getParamFieldsNum(): 1st Param is required"
+        return 99
+    fi
+    TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getParamFieldsNum(): 2nd Param is required"
+        return 99
+    fi
+    FIELDNAME="$2"
+    
+    
+    # 指定文字列を単語分割で区切って配列に格納
+    : ${(A)VALUE::=${=TARGET}}
+    
+    # shellスクリプトだけに限った話ではないが、配列数だけ変数に入れるのと、ループ時に毎回配列数を取る。どちらが早いのだろうか。
+    # GCCコンパイラとかを使う手続き型言語で、最適化に優れたコンパイラなら、きっとこの手の処理は演算が一回になる様にしてくれるだろうけど。
+    CNT=1
+    for LINE_BUFF in ${VALUE[*]}
+    do
+        if [[ "${LINE_BUFF}" == "${FIELDNAME}" ]];then
+            # 配列要素がヒットした場合、要素番号を返す。
+            echo ${CNT}
+            return 0
+        fi
+        
+        CNT=$(( CNT + 1 ))
+    done
+    
+    # ヒットしていなければ、エラーとする。
+    echo -e "Error:getParamFieldsNum(): Data[${TARGET}] No Fields [${FIELDNAME}]"
+    return 1
+}
+

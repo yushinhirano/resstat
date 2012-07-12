@@ -1,0 +1,78 @@
+########################################
+#
+# function setParam
+#
+#   [概要]
+#      指定されたコンフィグファイルにおける、指定のパラメータを設定してそのファイル修正する。
+#      
+#      【注意】
+#      PARAM、=、値の間に、スペースを挟むことが出来る。（値の中にスペースは挟めない）
+#      行等にスペースを挟むことは出来ない。
+#      パラメータの存在チェックは行っておらず、２つ以上存在した場合でも更新する。
+#
+#   [Usage]
+#      setParam conf_name param_name set_value
+#
+#   [引数]
+#      conf_name  : コンフィグファイル
+#      param_name : 設定対象パラメータ名
+#      set_value  : 設定値
+#
+#   [戻り値]
+#      正常終了 : 0
+#      修正一時ファイル作成エラー : 4
+#      修正一時ファイルから修正対象コンフィグへの反映エラー : 5
+#      コンフィグファイル自身が存在しない or 読み込み不能 : 11
+#      引数不正 : 99
+#
+########################################
+function setParam(){
+    #ローカル変数定義はシェルにより様々。ここでは一応localを使う。たいていのシェルにあるはず。
+    local PARAM_NAME
+    local PARAM_VALUE
+    local CONF_TARGET
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:setParam(): 1st Param is required"
+        return 99
+    fi
+    CONF_TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:setParam(): 2nd Param is required"
+        return 99
+    fi
+    PARAM_NAME="$2"
+    
+    if [[ -z "$3" ]];then
+        echo -e "Error:setParam(): 3rd Param is required"
+        return 99
+    fi
+    PARAM_VALUE="$3"
+    
+    if [[ ! -r "${CONF_TARGET}" ]];then
+        echo -e "Error:setParam(): File[${CONF_TARGET}] not exists"
+        return 11
+    fi
+    
+    awk -F ' *= *' '{ if ( $1 == "'"${PARAM_NAME}"'" ) { 
+                        printf("%s = %s\n",$1,"'"${PARAM_VALUE}"'");
+                      } else {
+                        print $0;
+                      }
+                    }' ${CONF_TARGET} > ${CONF_TARGET}.tmp
+    
+    if [[ $? -ne 0 ]];then
+        echo -e "Error:setParam(): awk and tmp file [${CONF_TARGET}.tmp] is error."
+        return 4
+    fi
+    
+    mv -f ${CONF_TARGET}.tmp ${CONF_TARGET}
+    if [[ $? -ne 0 ]];then
+        echo -e "Error:setParam(): tmp file [${CONF_TARGET}.tmp] mv [${CONF_TARGET}] is error."
+        return 5
+    fi
+
+    return 0
+}
+

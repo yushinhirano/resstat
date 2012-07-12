@@ -1,0 +1,1205 @@
+<html lang="ja"> 
+<head> 
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <meta http-equiv="Content-Language" content="ja"> 
+  <title>resstat 計測項目一覧</title> 
+  <style>
+    tr.header {
+      background-color: #ccccff;
+    }
+    td.contents_name{
+      background-color: #98FB98;
+      border-width: 1px 0px;
+    }
+    td.cls1 {
+      background-color: lightyellow;
+    }
+    td.cls2 {
+      background-color: aquamarine;
+    }
+    td.cls3 {
+      background-color: pink;
+    }
+    td.cls4 {
+      background-color: paleturquoise;
+    }
+    td.cls5 {
+      background-color: whitesmoke;
+    }
+    td.cls6 {
+      background-color: bisque;
+    }
+    td.cls7 {
+      background-color: lemonchiffon;
+    }
+    td.cls8 {
+      background-color: lavenderblush;
+    }
+    td.cls9 {
+      background-color: lightcyan;
+    }
+    td.cls10 {
+      background-color: palegoldenrod;
+    }
+    td.cls11 {
+      background-color: lightpink;
+    }
+    td.cls12 {
+      background-color: gold;
+    }
+    td.cls13 {
+      background-color: moccasin;
+    }
+    td.cls14 {
+      background-color: mistyrose;
+    }
+    td.cls15 {
+      background-color: khaki;
+    }
+    
+    
+  </style>
+</head>
+<body>
+<h2>resstat 測定項目一覧 ( for sysstat 7.0.2 , procs 3.2.7 )</h2>
+<a href="javascript:history.back()">[戻る]</a><br>
+<br>
+<caption>項目一覧</caption>
+<br>
+<br>
+
+<a href="#cpu">cpu</a><br>
+<a href="#interrupts">interrupts</a><br>
+<a href="#memory">memory</a><br>
+<a href="#swap">swap</a><br>
+<a href="#queuelen_loadavg">queuelen_loadavg</a><br>
+<a href="#paging">paging</a><br>
+<a href="#device">device</a><br>
+<a href="#vmstat">vmstat</a><br>
+<a href="#network">network</a><br>
+<a href="#socket">socket</a><br>
+<a href="#nfs/client">nfs/client</a><br>
+<a href="#nfs/server">nfs/server</a><br>
+<a href="#ktables">ktables</a><br>
+<a href="#process">process</a><br>
+<a href="#cprocess">cprocess</a><br>
+<a href="#tty">tty</a><br>
+<br>
+
+<table border="3" cellpadding="5">
+   <tr class="header">
+     <th>コマンド</th>
+     <th>区分</th>
+     <th>グラフタイトル</th>
+     <th>項目名</th>
+     <th>説明</th>
+   </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="cpu"><b>cpu</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%CPU</td>
+     <td>%user</td>
+     <td class="cls1">ユーザレベル (アプリケーション) での実行に使用された CPU時間の割合。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%nice_CPU</td>
+     <td>%nice</td>
+     <td class="cls1">nice コマンドにて静的優先度を変更したものに関する、ユーザレベルでの実行に使用された CPU時間の割合。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%system_CPU</td>
+     <td>%sys</td>
+     <td class="cls1">システムレベル(カーネル)プロセスのCPU使用率。ハードウェア割り込み、ソフト割り込み時間は含まない。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%iowait_CPU</td>
+     <td>%iowait</td>
+     <td class="cls1">システムに未完了のディスク I/O 要求がある間の CPU が idle である時間の割合。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%irq</td>
+     <td>%irq</td>
+     <td class="cls1">ハードウェア割り込みに使用した時間の割合。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%softirq</td>
+     <td>%soft</td>
+     <td class="cls1">ソフト割り込みに使用した時間の割合。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%idle_CPU</td>
+     <td>%idle</td>
+     <td class="cls1">CPU が idle で、システムに未完了のディスク I/O 要求がない状態の時間の割合。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>%steal_CPU</td>
+     <td>%steal</td>
+     <td class="cls1">ハイパーバイザが他の仮想OSに仮想プロセッサを使用し、強制的に待ち時間となっている割合。</td>
+    </tr>
+  <tr>
+<td>mpstat　-P ALL</td>
+     <td class="cls1">cpu</td>
+     <td>interrupts</td>
+     <td>intr/s</td>
+     <td class="cls1">1秒あたりの生成CPU割り込み回数。</td>
+    </tr>
+  <tr>
+<td>sar -u</td>
+     <td class="cls1">cpu</td>
+     <td>%CPU</td>
+     <td>%user</td>
+     <td class="cls1">ユーザレベル (アプリケーション) での実行に使用された CPU時間の割合。</td>
+    </tr>
+  <tr>
+<td>sar -u</td>
+     <td class="cls1">cpu</td>
+     <td>%nice_CPU</td>
+     <td>%nice</td>
+     <td class="cls1">nice コマンドにて静的優先度を変更したものに関する、ユーザレベルでの実行に使用された CPU時間の割合。</td>
+    </tr>
+  <tr>
+<td>sar -u</td>
+     <td class="cls1">cpu</td>
+     <td>%system_CPU</td>
+     <td>%system</td>
+     <td class="cls1">システムレベル(カーネル)プロセスのCPU使用率。ハードウェア割り込み、ソフト割り込み時間は含まない。</td>
+    </tr>
+  <tr>
+<td>sar -u</td>
+     <td class="cls1">cpu</td>
+     <td>%iowait_CPU</td>
+     <td>%iowait</td>
+     <td class="cls1">システムに未完了のディスク I/O 要求がある間の CPU が idle である時間の割合。</td>
+    </tr>
+  <tr>
+<td>sar -u</td>
+     <td class="cls1">cpu</td>
+     <td>%idle_CPU</td>
+     <td>%idle</td>
+     <td class="cls1">CPU が idle で、システムに未完了のディスク I/O 要求がない状態の時間の割合。</td>
+    </tr>
+  <tr>
+<td>sar -u</td>
+     <td class="cls1">cpu</td>
+     <td>%steal_CPU</td>
+     <td>%steal</td>
+     <td class="cls1">ハイパーバイザが他の仮想OSに仮想プロセッサを使用し、強制的に待ち時間となっている割合。</td>
+    </tr>
+  <tr>
+<td>sar -w</td>
+     <td class="cls1">cpu</td>
+     <td>context_switch/s</td>
+     <td>cswch/s</td>
+     <td class="cls1">1秒あたりのコンテキストスイッチ回数。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="interrupts"><b>interrupts</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -I</td>
+     <td class="cls2">interrupts</td>
+     <td>interrupts/s</td>
+     <td>intr/s</td>
+     <td class="cls2">1秒あたりの生成割り込み数。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="memory"><b>memory</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls3">memory</td>
+     <td>free_memory(kb)</td>
+     <td>kbmemfree</td>
+     <td class="cls3">利用出来る空きメモリの量 (キロバイト)。</td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls3">memory</td>
+     <td>used_memory(kb)</td>
+     <td>kbmemused</td>
+     <td class="cls3">使用中のメモリの量 (キロバイト)。カーネル自身が使用しているメモリについては計算に入らない。</td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls3">memory</td>
+     <td>%used_memory</td>
+     <td>%memused</td>
+     <td class="cls3">使用中メモリの割合。</td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls3">memory</td>
+     <td>buffered_memory(kb)</td>
+     <td>kbbuffers</td>
+     <td class="cls3">カーネルがバッファとして使用中のメモリの量 (キロバイト)。</td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls3">memory</td>
+     <td>cached_memory(kb)</td>
+     <td>kbcached</td>
+     <td class="cls3">カーネルがデータをキャッシュするために使用しているメモリの量 (キロバイト)。</td>
+    </tr>
+  <tr>
+<td>sar -R</td>
+     <td class="cls3">memory</td>
+     <td>free_memory(num_of_page)  </td>
+     <td>frmpg/s</td>
+     <td class="cls3">1秒間に、システムが開放したメモリページ数。負の数の場合、システムが割り当てたメモリページ数となる。ページサイズは、マシンアーキテクチャによっては4KBか8KBとなることに注意する。</td>
+    </tr>
+  <tr>
+<td>sar -R</td>
+     <td class="cls3">memory</td>
+     <td>buffer_memory(num_of_page)</td>
+     <td>bufpg/s</td>
+     <td class="cls3">1秒間に、システムがバッファとして追加確保したメモリページ数。負の数の場合、システムによってバッファとして使用されるページ数が減少したことを意味する。</td>
+    </tr>
+  <tr>
+<td>sar -R</td>
+     <td class="cls3">memory</td>
+     <td>cached_memory(num_of_page)</td>
+     <td>campg/s</td>
+     <td class="cls3">1秒間に、システムがキャッシュとして追加確保したメモリページ数。負の数の場合、システムによってキャッシュとして使用されるページ数が減少したことを意味する。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="swap"><b>swap</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls4">swap</td>
+     <td>free_swap(kb)</td>
+     <td>kbswpfree</td>
+     <td class="cls4">空きスワップ領域の量 (キロバイト)。</td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls4">swap</td>
+     <td>used_swap(kb)</td>
+     <td>kbswpused</td>
+     <td class="cls4">使用中のスワップ領域の量 (キロバイト)。</td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls4">swap</td>
+     <td>%used_swap</td>
+     <td>%swpused</td>
+     <td class="cls4">使用中のスワップ領域の割合。</td>
+    </tr>
+  <tr>
+<td>sar -r</td>
+     <td class="cls4">swap</td>
+     <td>cached_swap_memory</td>
+     <td>kbswpcad</td>
+     <td class="cls4">キャッシュされたスワップメモリの量 (キロバイト)。これは、一度スワップアウトしてメモリに戻っても、スワップ領域にも残ったままのメモリになる。もしメモリが要求されても、既にスワップ領域にあるため再度スワップアウトの必要はなく、I/O を減らす。</td>
+    </tr>
+  <tr>
+<td>sar -W</td>
+     <td class="cls4">swap</td>
+     <td>swapin/s</td>
+     <td>pswpin/s</td>
+     <td class="cls4">1秒あたりのスワップイン回数。</td>
+    </tr>
+  <tr>
+<td>sar -W</td>
+     <td class="cls4">swap</td>
+     <td>swapout/s</td>
+     <td>pswpout/s</td>
+     <td class="cls4">1秒あたりのスワップアウト回数。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="queuelen_loadavg"><b>queuelen_loadavg</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -q</td>
+     <td class="cls5">queuelen_loadavg</td>
+     <td>run_queue_length</td>
+     <td>runq-sz</td>
+     <td class="cls5">実行キューの長さ。(実行可能で実行待ちのキューに入っているプロセス数)</td>
+    </tr>
+  <tr>
+<td>sar -q</td>
+     <td class="cls5">queuelen_loadavg</td>
+     <td>process_thread_inlist</td>
+     <td>plist-sz</td>
+     <td class="cls5">プロセスリスト中のプロセス数。</td>
+    </tr>
+  <tr>
+<td>sar -q</td>
+     <td class="cls5">queuelen_loadavg</td>
+     <td>load_avg_last_min</td>
+     <td>ldavg-1</td>
+     <td class="cls5">過去 1 分間のシステムロードアベレージ。この数値は、単位時間当たりに、CPUが割り当てられず待ち状態となっているタスク数を表す。CPUの空きが無い状態に加え、IO待ち状態を含んでいるので、IOバウンドかCPUバウンドかは別の項目で判断すること。一般にはこの数値はCPUコア数（又はその２倍）以下に抑えるべきである。</td>
+    </tr>
+  <tr>
+<td>sar -q</td>
+     <td class="cls5">queuelen_loadavg</td>
+     <td>load_avg_past_5min</td>
+     <td>ldavg-5</td>
+     <td class="cls5">過去 5 分間のシステムロードアベレージ。</td>
+    </tr>
+  <tr>
+<td>sar -q</td>
+     <td class="cls5">queuelen_loadavg</td>
+     <td>load_avg_past_15min</td>
+     <td>ldavg-15</td>
+     <td class="cls5">過去 15 分間のシステムロードアベレージ。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="paging"><b>paging</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -B</td>
+     <td class="cls6">paging</td>
+     <td>page_in/s</td>
+     <td>pgpgin/s</td>
+     <td class="cls6">1 秒あたりのシステムがディスクからページインした合計数 (キロバイト)。カーネル2.2以前ではブロック数。</td>
+    </tr>
+  <tr>
+<td>sar -B</td>
+     <td class="cls6">paging</td>
+     <td>page_out/s</td>
+     <td>pgpgout/s</td>
+     <td class="cls6">1 秒あたりのシステムがディスクにページアウトした合計数 (キロバイト)。カーネル2.2以前ではブロック数。</td>
+    </tr>
+  <tr>
+<td>sar -B</td>
+     <td class="cls6">paging</td>
+     <td>page_fault/s</td>
+     <td>fault/s</td>
+     <td class="cls6">1 秒あたりのシステムが引き起こしたページフォルト (メジャーとマイナー) の回数 (2.5 カーネル以降のみ)。ページフォルトには I/O なしで解決出来るものもあるため、これは I/O を生成するページフォルトの数にはならない。</td>
+    </tr>
+  <tr>
+<td>sar -B</td>
+     <td class="cls6">paging</td>
+     <td>page_majorfault/s</td>
+     <td>majflt/s</td>
+     <td class="cls6">1 秒あたりのシステムが引き起こしたメジャーフォルトの回数で、ディスクからのメモリページのロードを要求したもの (カーネル 2.5 以降のみ)。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="device"><b>device</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -b</td>
+     <td class="cls7">device</td>
+     <td>diskio_reqcount/s</td>
+     <td>tps</td>
+     <td class="cls7">1秒あたりに物理デバイスへ要求されたI/Oリクエスト回数。1回の転送が物理デバイスへの1つのIO要求。複数の論理的なリクエストが一つのリクエストとして結合されてデバイスへ転送される。一つの転送は不確定なサイズとなる。</td>
+    </tr>
+  <tr>
+<td>sar -b</td>
+     <td class="cls7">device</td>
+     <td>diskio_readcount/s</td>
+     <td>rtps</td>
+     <td class="cls7">1秒あたりに物理デバイスへ要求された読み込みリクエスト回数。</td>
+    </tr>
+  <tr>
+<td>sar -b</td>
+     <td class="cls7">device</td>
+     <td>diskio_writecount/s</td>
+     <td>wtps</td>
+     <td class="cls7">1秒あたりに物理デバイスへ要求された書き込みリクエスト回数。</td>
+    </tr>
+  <tr>
+<td>sar -b</td>
+     <td class="cls7">device</td>
+     <td>diskio_readblocks/s</td>
+     <td>bread/s</td>
+     <td class="cls7">1秒あたりにデバイスから読み込んだブロック数。カーネル2.4以降では１ブロック512バイト。それ以前のカーネルでは、ブロックサイズは不確定。</td>
+    </tr>
+  <tr>
+<td>sar -b</td>
+     <td class="cls7">device</td>
+     <td>diskio_writeblocks/s</td>
+     <td>bwrtn/s</td>
+     <td class="cls7">1秒あたりにデバイスへ書き込まれたブロック数。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>merged_read_requests/s</td>
+     <td>rrqm/s</td>
+     <td class="cls7">１秒毎にマージされた読み込み要求数。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>merged_write_requests/s</td>
+     <td>wrqm/s</td>
+     <td class="cls7">１秒毎にマージされた書き込み要求数。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>read_requests/s</td>
+     <td>r/s</td>
+     <td class="cls7">読み込み要求数/秒。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>write_requests/s</td>
+     <td>w/s</td>
+     <td class="cls7">書き込み要求数/秒。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>read_kilobytes/s</td>
+     <td>rkB/s</td>
+     <td class="cls7">読み込み量(KB)/秒。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>write_kilobytes/s</td>
+     <td>wkB/s</td>
+     <td class="cls7">書き込み量(KB)/秒。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>avg_request_size</td>
+     <td>avgrq-sz</td>
+     <td class="cls7">I/O要求の平均サイズ(セクタ)。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>avg_request_queuelen</td>
+     <td>avgqu-sz</td>
+     <td class="cls7">I/O要求の平均待ち数。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>IO_avg_time</td>
+     <td>await</td>
+     <td class="cls7">I/O要求の平均待ち時間 (msec) 。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>IO_avg_servicetime</td>
+     <td>svctm</td>
+     <td class="cls7">I/O要求の平均処理時間 (msec) 。</td>
+    </tr>
+  <tr>
+<td>iostat -x -k -p</td>
+     <td class="cls7">device</td>
+     <td>%CPU_util_IO</td>
+     <td>%util</td>
+     <td class="cls7">I/O要求におけるCPU使用率(%) 。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>transfer/s</td>
+     <td>tps</td>
+     <td class="cls7">1秒あたりに指定デバイスへ要求されたI/Oリクエスト回数。1回の転送が物理デバイスへの1つのIO要求。複数の論理的なリクエストが一つのリクエストとして結合されてデバイスへ転送される。一つの転送は不確定なサイズとなる。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>rw_sectors/s</td>
+     <td>rd_sec/s</td>
+     <td class="cls7">デバイスから読み込まれたセクタ数。セクタサイズは512バイト。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>rw_sectors/s</td>
+     <td>wr_sec/s</td>
+     <td class="cls7">デバイスに書き込まれたセクタ数。セクタサイズは512バイト。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>avg_request_size</td>
+     <td>avgrq-sz</td>
+     <td class="cls7">デバイスへの平均リクエストサイズ（セクタ）。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>avg_request_queuelen</td>
+     <td>avgqu-sz</td>
+     <td class="cls7">デバイスへの平均リクエストキューサイズ。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>IO_avg_time</td>
+     <td>await</td>
+     <td class="cls7">デバイスへのI/O要求が処理されるまでに掛かった時間（msec）。これは、キュー内でリクエストによって使われた時間と、その処理時間を示す。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>IO_avg_servicetime</td>
+     <td>svctm</td>
+     <td class="cls7">デバイスへのI/O要求が処理されるまでの平均時間（msec）。</td>
+    </tr>
+  <tr>
+<td>sar -d -p</td>
+     <td class="cls7">device</td>
+     <td>%CPU_util_IO</td>
+     <td>%util</td>
+     <td class="cls7">デバイスへのI/O要求中の平均CPU使用率。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="vmstat"><b>vmstat</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>runtime_wait_process</td>
+     <td>r</td>
+     <td class="cls8">実行待ちのプロセス数。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>uninterruptible_sleep_process</td>
+     <td>b</td>
+     <td class="cls8">割り込み不可能なスリープ状態にあるプロセス数。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>vertual_memory</td>
+     <td>swpd</td>
+     <td class="cls8">仮想メモリの総量 (KB)。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>free_memory</td>
+     <td>free</td>
+     <td class="cls8">空きメモリの量 (KB)。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>buffer_memory</td>
+     <td>buff</td>
+     <td class="cls8">バッファに用いられているメモリの量 (KB)。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>cache_memory</td>
+     <td>cache</td>
+     <td class="cls8">キャッシュに用いられているメモリの量</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>memory_swap_in/s</td>
+     <td>si</td>
+     <td class="cls8">ディスクからスワップインされているメモリの量 (KB/s)</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>memory_swap_out/s</td>
+     <td>so</td>
+     <td class="cls8">ディスクにスワップしているメモリの量 (KB/s)。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>recieved_from_device(blocks/s)</td>
+     <td>bi</td>
+     <td class="cls8">ブロックデバイスに送られたブロック (blocks/s)。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>send_to_device(blocks/s)</td>
+     <td>bo</td>
+     <td class="cls8">ブロックデバイスから受け取ったブロック (blocks/s)。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>interrupts/s</td>
+     <td>in</td>
+     <td class="cls8">一秒あたりの割り込み回数。クロック割り込みも含む。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>context_switches/s</td>
+     <td>cs</td>
+     <td class="cls8">一秒あたりのコンテキストスイッチの回数。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>user_and_nice_time</td>
+     <td>us</td>
+     <td class="cls8">ユーザレベル (アプリケーション) での実行に使用された CPU時間の割合。niceにより静的優先度を変更されたプロセスのCPU時間を含む。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>system_time</td>
+     <td>sy</td>
+     <td class="cls8">システムレベル(カーネル)プロセスのCPU使用率。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>idle_time</td>
+     <td>id</td>
+     <td class="cls8">CPUが idle 状態である時間。カーネル 2.5.41 以前では、IO 待ち時間を含んでいる。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>iowait_time</td>
+     <td>wa</td>
+     <td class="cls8">CPUが IO 待ちに消費した時間。Linux 2.5.41 以前では、idle時間を含んでいる。</td>
+    </tr>
+  <tr>
+<td>vmstat</td>
+     <td class="cls8">vmstat</td>
+     <td>stolen_by_vm_time</td>
+     <td>st</td>
+     <td class="cls8">仮想OSに仮想プロセッサを使用し、強制的に待ち時間となっている割合。Linux 2.6.11より前では未知。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="network"><b>network</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -n DEV </td>
+     <td class="cls9">network</td>
+     <td>recieve_packets/s</td>
+     <td>rxpck/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが受信したパケット数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n DEV </td>
+     <td class="cls9">network</td>
+     <td>transfer_packets/s</td>
+     <td>txpck/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが送信したパケット数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n DEV </td>
+     <td class="cls9">network</td>
+     <td>recieve_bytes/s</td>
+     <td>rxbyt/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが受信したバイト数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n DEV </td>
+     <td class="cls9">network</td>
+     <td>transfer_bytes/s</td>
+     <td>txbyt/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが送信したバイト数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n DEV </td>
+     <td class="cls9">network</td>
+     <td>recieve_cmp_packets/s</td>
+     <td>rxcmp/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが受信した圧縮パケット数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n DEV </td>
+     <td class="cls9">network</td>
+     <td>transfer_cmp_packets/s</td>
+     <td>txcmp/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが送信した圧縮パケット数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n DEV </td>
+     <td class="cls9">network</td>
+     <td>recieve_cmp_multi_packets/s</td>
+     <td>rxmcst/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが受信したマルチキャストパケット数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>recieve_bad_packets/s</td>
+     <td>rxerr/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスが受信した不良パケット数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>transfer_bad_packets/s</td>
+     <td>txerr/s</td>
+     <td class="cls9">1 秒あたりにネットワークデバイスにおいてパケット送信中に発生したエラー数の合計。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>collision_transpackets/s</td>
+     <td>coll/s</td>
+     <td class="cls9">1 秒あたりのパケット送信中に発生したコリジョン数。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>drop_recpackets_overbuffer/s</td>
+     <td>rxdrop/s</td>
+     <td class="cls9">1 秒あたりの、Linuxカーネルバッファ内の領域不足によってネットワークデバイスが破棄した受信パケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>drop_transpackets_overbuffer/s</td>
+     <td>txdrop/s</td>
+     <td class="cls9">1 秒あたりの、Linuxカーネルバッファ内の領域不足によってネットワークデバイスが破棄した送信パケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>carrier_error_transpackets/s</td>
+     <td>txcarr/s</td>
+     <td class="cls9">1 秒あたりの、ネットワークデバイスにおいてパケット送信中に発生したキャリアエラー数。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>frame_align_error_recpackets/s</td>
+     <td>rxfram/s</td>
+     <td class="cls9">1 秒あたりの、ネットワークデバイスの受信パケットについて発生したフレームアライメントエラー数。なお、フレームアライメントエラーとは、フレーム内のビット数が 8 で割り切れない時に出されるエラーのこと。何らかの理由によりビット落ちが発生した場合に生じる。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>FIFO_overrun_erro_recpackets/s</td>
+     <td>rxfifo/s</td>
+     <td class="cls9">1 秒あたりの、ネットワークデバイスの受信パケットについて発生した FIFO オーバーランエラー数。バッファ不足でパケットをバッファに取り込めない時にセットされる。</td>
+    </tr>
+  <tr>
+<td>sar -n EDEV</td>
+     <td class="cls9">network</td>
+     <td>FIFO_overrun_erro_transpackets/s</td>
+     <td>txfifo/s</td>
+     <td class="cls9">1 秒あたりの、ネットワークデバイスの送信パケットについて発生した FIFO オーバーランエラー数。バッファ不足でパケットをバッファに取り込めない時にセットされる。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="socket"><b>socket</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -n SOCK</td>
+     <td class="cls10">socket</td>
+     <td>total_sockets</td>
+     <td>totsck</td>
+     <td class="cls10">使用されている合計ソケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n SOCK</td>
+     <td class="cls10">socket</td>
+     <td>tcp_sockets</td>
+     <td>tcpsck</td>
+     <td class="cls10">使用されているTCPソケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n SOCK</td>
+     <td class="cls10">socket</td>
+     <td>udp_sockets</td>
+     <td>udpsck</td>
+     <td class="cls10">使用されているUDPソケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n SOCK</td>
+     <td class="cls10">socket</td>
+     <td>raw_sockets</td>
+     <td>rawsck</td>
+     <td class="cls10">使用されているRAWソケット数。RAWソケットについては、man 2 socket参照。</td>
+    </tr>
+  <tr>
+<td>sar -n SOCK</td>
+     <td class="cls10">socket</td>
+     <td>ip-frag</td>
+     <td>ip-frag</td>
+     <td class="cls10">現在のIPフラグメント数。フラグメントは、MTUを超えるIPパケット送信時に発生するIPパケットの分割である。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="nfs/client"><b>nfs/client</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -n NFS</td>
+     <td class="cls11">nfs/client</td>
+     <td>RPC_calls</td>
+     <td>call/s</td>
+     <td class="cls11">1秒あたりのRPC生成回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFS</td>
+     <td class="cls11">nfs/client</td>
+     <td>RPC_retransmitted</td>
+     <td>retrans/s</td>
+     <td class="cls11">1秒間に必要になったRPC再送要求回数。（タイムアウトなどの理由によるもの）</td>
+    </tr>
+  <tr>
+<td>sar -n NFS</td>
+     <td class="cls11">nfs/client</td>
+     <td>RPC_read</td>
+     <td>read/s</td>
+     <td class="cls11">1秒あたりのRPC[read]がコールされた回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFS</td>
+     <td class="cls11">nfs/client</td>
+     <td>RPC_write</td>
+     <td>write/s</td>
+     <td class="cls11">1秒あたりのRPC[write]がコールされた回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFS</td>
+     <td class="cls11">nfs/client</td>
+     <td>RPC_access</td>
+     <td>access/s</td>
+     <td class="cls11">1秒あたりのRPC[access]がコールされた回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFS</td>
+     <td class="cls11">nfs/client</td>
+     <td>RPC_getattr</td>
+     <td>getatt/s</td>
+     <td class="cls11">1秒あたりのRPC[getattr]がコールされた回数。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="nfs/server"><b>nfs/server</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>RPC_recieve_calls  </td>
+     <td>scall/s  </td>
+     <td class="cls12">1秒あたりのRPC受信回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>RPC_error_rec_calls</td>
+     <td>badcall/s</td>
+     <td class="cls12">1秒間に、受信したRPCがエラーを起こした回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>recieve_packets    </td>
+     <td>packet/s </td>
+     <td class="cls12">1秒間に受信したネットワークパケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>recieve_udp_packets</td>
+     <td>udp/s    </td>
+     <td class="cls12">1秒間に受信したUDPパケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>recieve_tcp_packets</td>
+     <td>tcp/s    </td>
+     <td class="cls12">1秒間に受信したTCPパケット数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>reply_cache_hits   </td>
+     <td>hit/s    </td>
+     <td class="cls12">1秒間に、応答キャッシュにヒットした回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>reply_cache_miss   </td>
+     <td>miss/s   </td>
+     <td class="cls12">1秒間に、応答キャッシュがミスした回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>RPC_recieve_read   </td>
+     <td>sread/s  </td>
+     <td class="cls12">1秒間に受信したRPC[read]コールの回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>RPC_recieve_write  </td>
+     <td>swrite/s </td>
+     <td class="cls12">1秒間に受信したRPC[wite]コールの回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>RPC_recieve_access </td>
+     <td>saccess/s</td>
+     <td class="cls12">1秒間に受信したRPC[access]コールの回数。</td>
+    </tr>
+  <tr>
+<td>sar -n NFSD</td>
+     <td class="cls12">nfs/server</td>
+     <td>RPC_recieve_getattr</td>
+     <td>sgetatt/s</td>
+     <td class="cls12">1秒間に受信したRPC[getattr]コールの回数。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="ktables"><b>ktables</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>directory_cache_unused     </td>
+     <td>dentunusd</td>
+     <td class="cls13">使用されていないディレクトリキャッシュエントリ。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>file_handlers              </td>
+     <td>file-sz  </td>
+     <td class="cls13">ファイルハンドラ数。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>inode_handlers             </td>
+     <td>inode-sz </td>
+     <td class="cls13">inodeハンドラ数。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>super_block_handlers       </td>
+     <td>super-sz </td>
+     <td class="cls13">カーネルによって割り当てられたスーパーブロックハンドラ数。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>super_block_handlers_usepct</td>
+     <td>%super-sz</td>
+     <td class="cls13">割り当て可能な最大スーパーブロック数に対する、現在のスーパーブロック割り当て使用率。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>disk_quota_entries         </td>
+     <td>dquot-sz </td>
+     <td class="cls13">割り当てられたディスククォータエントリ数。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>disk_quota_entry_usepct    </td>
+     <td>%dquot-sz</td>
+     <td class="cls13">割り当て可能な最大ディスククォータエントリ数に対する、現在のディスククォータエントリ使用率。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>RT_signals                 </td>
+     <td>rtsig-sz </td>
+     <td class="cls13">キュー内にあるRTシグナル数。</td>
+    </tr>
+  <tr>
+<td>sar -v</td>
+     <td class="cls13">ktables</td>
+     <td>RT_signals_usepct          </td>
+     <td>%rtsig-sz</td>
+     <td class="cls13">キューにセットできる最大のRTシグナル数に対する、現在のRTシグナル使用率。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="process"><b>process</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -c</td>
+     <td class="cls14">process</td>
+     <td>process_create/s</td>
+     <td>proc/s</td>
+     <td class="cls14">1秒あたりのプロセス生成数。</td>
+    </tr>
+  <tr>
+<td>sar -x</td>
+     <td class="cls14">process</td>
+     <td>minor_fault       </td>
+     <td>minflt/s</td>
+     <td class="cls14">1秒間にプロセスが生成したマイナーフォルト数。ディスクからメモリページを要求することはない。</td>
+    </tr>
+  <tr>
+<td>sar -x</td>
+     <td class="cls14">process</td>
+     <td>major_fault       </td>
+     <td>majflt/s</td>
+     <td class="cls14">1秒間にプロセスが生成したメジャーフォルト数。ディスクからメモリページを要求する。</td>
+    </tr>
+  <tr>
+<td>sar -x</td>
+     <td class="cls14">process</td>
+     <td>user_cpu_pct      </td>
+     <td>%user   </td>
+     <td class="cls14">プロセスが使用したユーザレベルCPU使用時間のパーセント表示。（niceにより静的優先度を変更されたものを含む）</td>
+    </tr>
+  <tr>
+<td>sar -x</td>
+     <td class="cls14">process</td>
+     <td>system_cpu_pct    </td>
+     <td>%system </td>
+     <td class="cls14">プロセスが使用したシステム(カーネル)レベルCPU使用時間のパーセント表示。</td>
+    </tr>
+  <tr>
+<td>sar -x</td>
+     <td class="cls14">process</td>
+     <td>swap_out          </td>
+     <td>nswap/s </td>
+     <td class="cls14">システムが、このプロセスのアドレス空間からスワップアウトした数。（カーネル2.5では常に0）</td>
+    </tr>
+  <tr>
+<td>sar -x</td>
+     <td class="cls14">process</td>
+     <td>attached_processor</td>
+     <td>CPU     </td>
+     <td class="cls14">割り当てられているプロセッサ（CPUコア）番号。</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="cprocess"><b>cprocess</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -X</td>
+     <td class="cls15">cprocess</td>
+     <td>cminor_fault       </td>
+     <td>cminflt/s</td>
+     <td class="cls15">1秒間に子プロセスが生成したマイナーフォルト数。ディスクからメモリページを要求することはない。</td>
+    </tr>
+  <tr>
+<td>sar -X</td>
+     <td class="cls15">cprocess</td>
+     <td>cmajor_fault       </td>
+     <td>cmajflt/s</td>
+     <td class="cls15">1秒間に子プロセスが生成したメジャーフォルト数。ディスクからメモリページを要求する。</td>
+    </tr>
+  <tr>
+<td>sar -X</td>
+     <td class="cls15">cprocess</td>
+     <td>cuser_cpu_pct      </td>
+     <td>%cuser   </td>
+     <td class="cls15">子プロセスが使用したユーザレベルCPU使用時間のパーセント表示。（niceにより静的優先度を変更されたものを含む）</td>
+    </tr>
+  <tr>
+<td>sar -X</td>
+     <td class="cls15">cprocess</td>
+     <td>csystem_cpu_pct    </td>
+     <td>%csystem </td>
+     <td class="cls15">子プロセスが使用したシステム(カーネル)レベルCPU使用時間のパーセント表示。</td>
+    </tr>
+  <tr>
+<td>sar -X</td>
+     <td class="cls15">cprocess</td>
+     <td>cswap_out          </td>
+     <td>cnswap/s </td>
+     <td class="cls15">システムが、この子プロセスのアドレス空間からスワップアウトした数。（カーネル2.5では常に0）</td>
+    </tr>
+  <tr>
+      <td class="contents_name" colspan=5 >
+      <a name="tty"><b>tty</b></a>
+      </td>
+    </tr>
+  <tr>
+<td>sar -y</td>
+     <td class="cls1">tty</td>
+     <td>receive_interrupts</td>
+     <td>rcvin/s  </td>
+     <td class="cls1">現在のシリアルラインから受信した割り込み数。シリアルライン番号はTTYカラムで与えられる。</td>
+    </tr>
+  <tr>
+<td>sar -y</td>
+     <td class="cls1">tty</td>
+     <td>transmit_interrupts</td>
+     <td>xmtin/s  </td>
+     <td class="cls1">現在のシリアルラインに送信した割り込み数。</td>
+    </tr>
+  <tr>
+<td>sar -y</td>
+     <td class="cls1">tty</td>
+     <td>frame_errors       </td>
+     <td>framerr/s</td>
+     <td class="cls1">現在のシリアルラインで発生したフレームエラー数。</td>
+    </tr>
+  <tr>
+<td>sar -y</td>
+     <td class="cls1">tty</td>
+     <td>parity_errors      </td>
+     <td>prtyerr/s</td>
+     <td class="cls1">現在のシリアルラインで発生したパリティエラー数。</td>
+    </tr>
+  <tr>
+<td>sar -y</td>
+     <td class="cls1">tty</td>
+     <td>break              </td>
+     <td>brk/s    </td>
+     <td class="cls1">現在のシリアルラインで発生したbreak数。</td>
+    </tr>
+  <tr>
+<td>sar -y</td>
+     <td class="cls1">tty</td>
+     <td>overruns           </td>
+     <td>ovrun/s  </td>
+     <td class="cls1">現在のシリアルラインで発生したオーバランエラー数。</td>
+    </tr>
+</table>
+<br>
+<a href="javascript:history.back()">[戻る]</a><br>
+<br>
+</body>
+</html>
+

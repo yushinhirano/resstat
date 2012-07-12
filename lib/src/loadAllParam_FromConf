@@ -1,0 +1,39 @@
+########################################
+#
+# function loadAllParam_FromConf
+#
+#   [概要]
+#      resstat.confの全パラメータをプロセスメモリ領域に取り込む。
+#
+#   [Usage]
+#      loadAllParam_FromConf set_value
+#
+#   [引数]
+#      set_type   : 1 :: グローバル変数セット
+#                   2 :: 環境変数にexport
+#
+#   [戻り値]
+#      パラメータ有：0
+#      パラメータ無：1
+#      パラメータ複数存在：2
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function loadAllParam_FromConf(){
+    
+    if [[ ! -r "${CONF_FILE}" ]];then
+        echo -e "Error:loadAllParam_FromConf(): File[${CONF_FILE}] not exists"
+        return 11
+    fi
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:loadAllParam_FromConf(): 1st Param is required"
+        return 99
+    fi
+
+    loadAllParam "${CONF_FILE}" "$1"
+    
+    return $?
+}
+

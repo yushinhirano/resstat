@@ -1,0 +1,90 @@
+########################################
+#
+# function getParam
+#
+#   [概要]
+#      指定されたコンフィグファイルから指定のパラメータを取得する。
+#      PARAM=VALUE形式でPARAMからVALUEを取得して標準出力する。
+#      
+#      【注意】
+#      行頭、PARAM、=、値の全ての間に、スペースを挟むことが出来る。（値の中にスペースは挟めない）
+#      ただし、行頭にスペースは非推奨。（common.shのSYSKBN取得が行頭スペースを回避し切れないから）
+#      同一のパラメータが複数存在した場合エラー。
+#
+#   [Usage]
+#      getParam conf_name param_name
+#
+#   [引数]
+#      conf_name  : コンフィグファイル
+#      param_name : 取得対象パラメータ名
+#
+#   [戻り値]
+#      パラメータ有：0
+#      パラメータ無：1
+#      パラメータ複数存在：2
+#      コンフィグファイル自身が存在しない or 読み込み不能：11
+#      引数不正：99
+#
+########################################
+function getParam(){
+    #ローカル変数定義はシェルにより様々。ここでは一応localを使う。たいていのシェルにあるはず。
+    local PARAM_NAME
+    local VALUE
+    local CONF_TARGET
+    local VALUES
+    local LINE_BUFF
+    local LEFTVAL
+    local RIGHTVAL
+    
+    if [[ -z "$1" ]];then
+        echo -e "Error:getParam(): 1st Param is required"
+        return 99
+    fi
+    CONF_TARGET="$1"
+    
+    if [[ -z "$2" ]];then
+        echo -e "Error:getParam(): 2nd Param is required"
+        return 99
+    fi
+    PARAM_NAME="$2"
+    
+    if [[ ! -r "${CONF_TARGET}" ]];then
+        echo -e "Error:getParam(): File[${CONF_TARGET}] not exists"
+        return 11
+    fi
+    
+    # 先頭${PARAM_NAME}=で始まる行を取得し、[=]から前方を全てを削除して配列取り込み
+    
+    # 先頭#及び空行を除き、[*${PARAM_NAME}*=*]にマッチする（PARAM_NAMEを=の前に含む行）を取得してループ
+    for LINE_BUFF in ${(M)${${(@f)"$(<${CONF_TARGET})"}:#[#]*}:#*${PARAM_NAME}*[=]*}
+    do
+        # 行を右から最長一致の[=]で区切って単語分割し、左辺を取得。（上記の条件により、[=]は必ず存在。）
+        : ${(A)LEFTVAL::=${=${LINE_BUFF%%[=]*}}}
+        
+        # 単語分割してカラム２以上は無視。
+        if [[ ${#LEFTVAL[*]} -ne 1 ]];then
+            continue
+        fi
+        
+        # 左辺値が取得パラメータ名と完全一致した場合
+        if [[ ${LEFTVAL[1]} == "${PARAM_NAME}" ]];then
+            # 行を左から最短一致の[=]で区切り、単語分割して右辺値を取得。
+            : ${(A)RIGHTVAL::=${=${LINE_BUFF#*[=]}}}
+            # 単語分割してカラム２以上は無視。
+            if [[ ${#RIGHTVAL[*]} -ne 1 ]];then
+                continue
+            fi
+            
+            if [[ -z "${VALUES}" ]];then
+                VALUES=${RIGHTVAL[1]}
+            else
+                # 二回目のヒットの場合はエラーリターン
+                return 2
+            fi
+        fi
+    done
+    
+    echo -E "${VALUES}"
+    return 0
+}
+

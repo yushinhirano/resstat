@@ -1,0 +1,55 @@
+########################################
+#
+# グラフコンフィグ共通セット
+#    sysstat      : 10.0.0～10.0.2
+#    procs        : 3.2.8
+#
+########################################
+
+このディレクトリのコンフィグ一式は、
+sysstatバージョン10.0.0～10.0.2、procsバージョン3.2.8用のグラフ化コンフィグファイルです。
+
+########################################
+# 前バージョンとの変更点 ( from sysstat 9.0.0)
+########################################
+  9.1.2 -- iostat 拡張情報に、 r_await and w_awaitを追加。
+           ・iostat.confを修正
+  
+  9.1.4 -- fan speed と device temperatureをsarとsadcに追加。
+           ・sar_m_FAN.conf、sar_m_TEMP.confを追加。sar_m.confをsar_m_CPU.confに変更。
+  
+  9.1.5 -- voltage inputsをsarとsadcに追加。
+        -- %tempフィールドが、sar -m TEMPに追加。
+        -- drpmフィールドが、sar -m FANに追加。
+           ・sar_m_IN.confを追加。
+           ・sar_m_FAN.conf、sar_m_TEMP.confを修正。
+
+  9.1.6 -- CPU平均周波数が、sarとsadcに追加。
+           ・sar_m_FREQ.confを追加。
+        -- hugepages utilizationが、sarとsadcに追加。
+           ・sar__H.confを追加。
+
+  9.1.7 -- sar -qにIO待ちのタスクを表示するカラムを追加。
+           ・sar_q.confを修正。
+        -- sar -rにアクティブ/インアクティブメモリの表示カラムを追加。
+           ・sar_q.confを修正。
+
+  ※sar_m_FAN.conf、sar_m_TEMP.conf、sar_m_IN.conf、sar_m_FREQ.confは、
+    追加作成したものの、これらの値を取得出来る環境が不明なため、未テスト状態。
+  ※10.0.1で追加されるsar -m USBは、グラフ化可能な項目が存在しないため、対象外。
+
+
+########################################
+# パッケージ構成
+########################################
+
+sysstat 10.0.0
+  |----------  sar
+  |----------  mpstat
+  |----------  iostat
+  |----------  pidstat
+
+
+procps 3.2.8
+  |---------  vmstat
+
