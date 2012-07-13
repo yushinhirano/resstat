@@ -1533,7 +1533,8 @@ if ${MULTIPLOT_FLG};then
         done
         
         # gnuplotコマンド実行
-        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT}
+        # Work Arround : for gnuplot can't find error message
+        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT} 2>&1 | grep -v "Could not find/open font when opening font"
 
     done
 fi
@@ -1593,7 +1594,8 @@ if [[ ${#SINGLE_TARGETS[*]} -ge 1 ]];then
         # 中に\が入ってるので解析禁止
         echo -E "${SCRIPT}" > ${GNUPLOT_SCRIPT}
         # gnuplotコマンド実行
-        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT}
+        # Work Arround : for gnuplot can't find error message
+        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT} 2>&1 | grep -v "Could not find/open font when opening font"
     done
 fi
 
