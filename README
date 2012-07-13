@@ -87,7 +87,7 @@ BRIEFファイルを参照してみてください。
      ①．github
        githubから取得する場合、以下のコマンドを実行します。
        
-       $ git clone git://github.com/yushinhirano/resstat.git
+       $ git clone https://github.com/yushinhirano/resstat.git
 
      ②．tarballの展開
        resstatのtarアーカイブを取得してインストールする場合。
