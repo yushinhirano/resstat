@@ -1534,7 +1534,7 @@ if ${MULTIPLOT_FLG};then
         
         # gnuplotコマンド実行
         # Work Arround : for gnuplot can't find error message
-        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT} 2>&1 | grep -v "Could not find/open font when opening font"
+        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT} 2>&1 | grep -E -v ("Could not find/open font when opening font"|"Warning: empty y range")
 
     done
 fi
@@ -1595,7 +1595,7 @@ if [[ ${#SINGLE_TARGETS[*]} -ge 1 ]];then
         echo -E "${SCRIPT}" > ${GNUPLOT_SCRIPT}
         # gnuplotコマンド実行
         # Work Arround : for gnuplot can't find error message
-        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT} 2>&1 | grep -v "Could not find/open font when opening font"
+        ${=GNUPLOT_CMD} ${GNUPLOT_SCRIPT} 2>&1 | grep -E -v ("Could not find/open font when opening font"|"Warning: empty y range")
     done
 fi
 
